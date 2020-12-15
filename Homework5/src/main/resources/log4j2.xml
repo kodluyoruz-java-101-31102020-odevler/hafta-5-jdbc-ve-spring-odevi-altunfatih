@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<Properties>
+		<property name="path">C:\Users\fatih\Desktop\</property>
+	</Properties>
+
+    <Appenders>
+    	<RollingFile name="rolling" fileName="${path}personel.log" filePattern="${path}personel-%d{dd-MM-yyy-HH-mm-ss}-%i.log">
+    		<PatternLayout pattern="%-5level %logger{36} - (%F:%L) - %msg%n"></PatternLayout>
+    		
+    		<Policies>
+    			<SizeBasedTriggeringPolicy size="3 KB" />
+    		</Policies>
+    		
+    		<!-- aynı anda oluşuturulabilecek dosya sayısı -->
+    		<DefaultRolloverStrategy max="200"></DefaultRolloverStrategy>
+    	</RollingFile>
+    	
+        <Console name="console" target="SYSTEM.OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        
+        <File name="MyFile" fileName="C:\Users\fatih\Desktop\all.log" immediateFlush="false" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - (%F:%L) - %msg%n"/>
+        </File>
+    </Appenders>
+    
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile"/>
+        </Root>
+        
+        <Logger name="com.proje" level="INFO" additivitiy="false">
+        	<AppenderRef ref="rolling"></AppenderRef>
+        	<AppenderRef ref="console"></AppenderRef>
+        	<AppenderRef ref="file"></AppenderRef>
+        </Logger>
+    </Loggers>
+</Configuration>
